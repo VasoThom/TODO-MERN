@@ -11,6 +11,6 @@ const router = Router();
 router.get("/", getAllTodos);
 router.post("/create", createTodos);
 router.put("/update", updateTodos);
-router.delete("/delete", deletedTodos);
+router.post("/delete", deletedTodos);
 
 export default router;

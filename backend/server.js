@@ -11,10 +11,13 @@ server.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-
+server.use(
+  cors({
+    origin: "*",
+  })
+);
 server.use(express.json());
 server.use("/api", todoRouter);
-server.use(cors());
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
