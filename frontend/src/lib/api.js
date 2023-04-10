@@ -47,7 +47,7 @@ const deleteAtask = (_id, setTodo) => {
   axios
     .post(`${baseUrl}/delete`, { _id })
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       getAll(setTodo);
     })
     .catch((err) => console.log(err));
