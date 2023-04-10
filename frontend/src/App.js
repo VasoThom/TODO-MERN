@@ -1,23 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import Todo from "./components/Todo.js";
+import { getAll, addAtask, updateAtask, deleteAtask } from "./lib/api.js";
 
 function App() {
+  const [toDo, setTodo] = useState([]);
+  const [value, setValue] = useState("");
+  const [update, setIsUpdating] = useState(false);
+  const [id, setId] = useState("");
+
+  const onChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  useEffect(() => {
+    getAll(setTodo);
+  }, []);
+
+  const updateMode = (_id, text) => {
+    setIsUpdating(true);
+    setValue(text);
+    setId(_id);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1> Todo App</h1>
+
+      <div className="container">
+        <input
+          type="text"
+          placeholder="Add  a task..."
+          value={value}
+          onChange={onChange}
+        />
+        <button
+          className="button"
+          onClick={
+            update
+              ? () => updateAtask(id, value, setValue, setTodo, setIsUpdating)
+              : () => addAtask(value, setValue, setTodo)
+          }
         >
-          Learn React
-        </a>
-      </header>
+          {update ? "Update" : "Add"}
+        </button>
+      </div>
+      <div className="todos">
+        {toDo.map((todo) => {
+          return (
+            <Todo
+              key={todo._id}
+              text={todo.text}
+              updateMode={() => updateMode(todo._id, todo.text)}
+              deleteMode={() => deleteAtask(todo._id, setTodo)}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
