@@ -22,6 +22,8 @@ function App() {
     setValue(text);
     setId(_id);
   };
+  console.log(toDo);
+
   return (
     <div className="App">
       <h1> Todo App</h1>
@@ -38,7 +40,11 @@ function App() {
           onClick={
             update
               ? () => updateAtask(id, value, setValue, setTodo, setIsUpdating)
-              : () => addAtask(value, setValue, setTodo)
+              : () => {
+                  if (value.trim() !== "") {
+                    addAtask(value, setValue, setTodo);
+                  }
+                }
           }
         >
           {update ? "Update" : "Add"}
