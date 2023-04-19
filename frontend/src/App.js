@@ -16,13 +16,15 @@ function App() {
   useEffect(() => {
     getAll(setTodo);
   }, []);
-
+  useEffect(() => {
+    console.log("show ", toDo);
+  }, [toDo]);
   const updateMode = (_id, text) => {
     setIsUpdating(true);
     setValue(text);
     setId(_id);
   };
-  console.log(toDo);
+  console.log("show me if is  empty", toDo);
 
   return (
     <div className="App">
